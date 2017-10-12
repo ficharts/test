@@ -20,6 +20,7 @@ const restify = require('restify');
 const apiai = require('apiai');
 const express = require('express');
 const bodyParser = require('body-parser');
+const botbuilder = require('botbuilder');
 
 const SkypeBot = require('./skypebot');
 const SkypeBotConfig = require('./skypebotconfig');
@@ -34,6 +35,18 @@ const botConfig = new SkypeBotConfig(
 );
 
 const skypeBot = new SkypeBot(botConfig);
+skypeBot.bot.recognizer(new botbuilder.LuisRecognizer(process.env.LUIS_END_POINT));
+skypeBot.bot.dialog('conference', function(session, arg){
+            
+                 session.endDialog('会议时间查询完成');
+                
+        }).triggerAction({ matches: 'Business.QueryTime' });
+
+        skypeBot.bot.dialog('/', (session) => {
+            if (session.message && session.message.text) {
+                skypeBot.processMessage(session);
+            }
+        });
 
 var server = restify.createServer();
 server.use(restify.plugins.jsonBodyParser());
