@@ -1,0 +1,17 @@
+{
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Program",
+                "program": "${workspaceRoot}/app.js",
+                "env": {
+                    "APIAI_ACCESS_TOKEN": "4890162830b84ea2bb244f5d74214d3e",
+                    "APIAI_LANG": "en",
+                    "APP_ID":"ab51be8e-3e08-4fd4-9ae6-0a99078532e7",
+                    "APP_SECRET": "Ts8dcbhBZ5K2FQhviP08Pnk"
+                  }
+            }
+        ]
+    }
