@@ -70,6 +70,13 @@ module.exports = class SkypeBot {
         });
 
         this._bot = new botbuilder.UniversalBot(this.botService);
+        this._bot.recognizer(new botbuilder.LuisRecognizer(process.env.LUIS_END_POINT));
+
+        this._bot.dialog('conference', function(session, arg){
+            
+                 session.endDialog('会议时间查询完成')
+                
+        }).triggerAction({ matches: 'Business.QueryTime' });
 
         this._bot.dialog('/', (session) => {
             if (session.message && session.message.text) {

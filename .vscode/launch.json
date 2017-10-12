@@ -10,7 +10,14 @@
                     "APIAI_ACCESS_TOKEN": "4890162830b84ea2bb244f5d74214d3e",
                     "APIAI_LANG": "en",
                     "APP_ID":"ab51be8e-3e08-4fd4-9ae6-0a99078532e7",
-                    "APP_SECRET": "Ts8dcbhBZ5K2FQhviP08Pnk"
+                    "APP_SECRET": "Ts8dcbhBZ5K2FQhviP08Pnk",
+                    "LUIS_END_POINT" : "https://southeastasia.api.cognitive.microsoft.com/luis/v2.0/apps/38fa8e1b-4495-4187-accc-9301800ffd18?subscription-key=897bb2763ebd424d9d3d4ee5dfaa0077&timezoneOffset=480&verbose=true&q="//正式
+                }
+                
+            }
+        ]
+    }
+    
                   }
             }
         ]
