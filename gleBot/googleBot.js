@@ -25,21 +25,8 @@ module.exports = class GoogleBot {
         return this._apiaiService;
     }
 
-    get bot()
-    {
-        return this._bot;
-    }
-
     set apiaiService(value) {
         this._apiaiService = value;
-    }
-
-    get botConfig() {
-        return this._botConfig;
-    }
-
-    set botConfig(value) {
-        this._botConfig = value;
     }
 
     get sessionIds() {
@@ -50,16 +37,15 @@ module.exports = class GoogleBot {
         this._sessionIds = value;
     }
 
-    constructor(botConfig) {
-        this._botConfig = botConfig;
+    constructor() 
+    {
         var apiaiOptions = {
-            language: botConfig.apiaiLang,
+            language: process.env.APIAI_LANG,
             requestSource: "skype"
         };
 
-        this._apiaiService = apiai(botConfig.apiaiAccessToken, apiaiOptions);
+        this._apiaiService = apiai(process.env.APIAI_ACCESS_TOKEN, apiaiOptions);
         this._sessionIds = new Map();
-
     }
 
     processMessage(session) {
@@ -85,9 +71,6 @@ module.exports = class GoogleBot {
                 });
 
             apiaiRequest.on('response', (response) => {
-                if (this._botConfig.devConfig) {
-                    console.log(sender, "Received api.ai response");
-                }
 
                 if (GoogleBot.isDefined(response.result) && GoogleBot.isDefined(response.result.fulfillment)) {
                     let responseText = response.result.fulfillment.speech;

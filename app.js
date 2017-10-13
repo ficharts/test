@@ -19,13 +19,11 @@
 const restify = require('restify');
 const apiai = require('apiai');
 
-const GoogleBot = require('./googleBot');
-const GleConfig = require('./googleBotConfig');
-var gleBot;
+const GoogleBot = require('./gleBot/googleBot');
 const botbuilder = require('botbuilder');
 
 
-initGleBot();
+var gleBot = new GoogleBot();
 
 var botService = new botbuilder.ChatConnector({
     appId: process.env.APP_ID,
@@ -45,13 +43,3 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 server.post('/api/messages', botService.listen());
-
-function initGleBot()
-{
-    const botConfig = new GleConfig(
-        process.env.APIAI_ACCESS_TOKEN,
-        process.env.APIAI_LANG
-    );
-    
-    gleBot = new GoogleBot(botConfig);
-}
