@@ -21,6 +21,7 @@ const apiai = require('apiai');
 
 const GoogleBot = require('./googleBot');
 const GleConfig = require('./googleBotConfig');
+var gleBot;
 const botbuilder = require('botbuilder');
 
 
@@ -52,5 +53,5 @@ function initGleBot()
         process.env.APIAI_LANG
     );
     
-    const gleBot = new GoogleBot(botConfig);
+    gleBot = new GoogleBot(botConfig);
 }
