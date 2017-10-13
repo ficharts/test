@@ -25,6 +25,11 @@ module.exports = class GoogleBot {
         return this._apiaiService;
     }
 
+    get bot()
+    {
+        return this._bot;
+    }
+
     set apiaiService(value) {
         this._apiaiService = value;
     }
