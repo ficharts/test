@@ -16,7 +16,7 @@
  
 'use strict';
 
-module.exports = class SkypeBotConfig {
+module.exports = class GleBotConfig {
 
     get apiaiAccessToken() {
         return this._apiaiAccessToken;
@@ -34,28 +34,12 @@ module.exports = class SkypeBotConfig {
         this._apiaiLang = value;
     }
 
-    get skypeBotId() {
-        return this._skypeBotId;
+    get botId() {
+        return this._botId;
     }
 
-    set skypeBotId(value) {
-        this._skypeBotId = value;
-    }
-
-    get skypeAppId() {
-        return this._skypeAppId;
-    }
-
-    set skypeAppId(value) {
-        this._skypeAppId = value;
-    }
-
-    get skypeAppSecret() {
-        return this._skypeAppSecret;
-    }
-
-    set skypeAppSecret(value) {
-        this._skypeAppSecret = value;
+    set botId(value) {
+        this._botId = value;
     }
 
     get devConfig() {
@@ -69,24 +53,18 @@ module.exports = class SkypeBotConfig {
     constructor(apiaiAccessToken, apiaiLang, appId, appSecret) {
         this._apiaiAccessToken = apiaiAccessToken;
         this._apiaiLang = apiaiLang;
-        this._skypeAppId = appId;
-        this._skypeAppSecret = appSecret;
     }
 
     toPlainDoc() {
         return {
             apiaiAccessToken: this._apiaiAccessToken,
             apiaiLang: this._apiaiLang,
-            skypeAppId: this._skypeAppId,
-            skypeAppSecret: this._skypeAppSecret
         }
     }
 
     static fromPlainDoc(doc){
-        return new SkypeBotConfig(
+        return new GleBotConfig(
             doc.apiaiAccessToken,
-            doc.apiaiLang,
-            doc.skypeAppId, 
-            doc.skypeAppSecret);
+            doc.apiaiLang);
     }
 };

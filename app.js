@@ -18,28 +18,39 @@
 
 const restify = require('restify');
 const apiai = require('apiai');
-const express = require('express');
-const bodyParser = require('body-parser');
 
-const SkypeBot = require('./skypebot');
-const SkypeBotConfig = require('./skypebotconfig');
+const GoogleBot = require('./googleBot');
+const GleConfig = require('./googleBotConfig');
+const botbuilder = require('botbuilder');
 
-const REST_PORT = (process.env.PORT || 3798);
 
-const botConfig = new SkypeBotConfig(
-    process.env.APIAI_ACCESS_TOKEN,
-    process.env.APIAI_LANG,
-    process.env.APP_ID,
-    process.env.APP_SECRET
-);
+initGleBot();
 
-const skypeBot = new SkypeBot(botConfig);
+var botService = new botbuilder.ChatConnector({
+    appId: process.env.APP_ID,
+    appPassword: process.env.APP_SECRET
+});
+
+var mBot = new botbuilder.UniversalBot(botService);
+mBot.dialog('/', (session) => {
+    if (session.message && session.message.text) {
+        gleBot.processMessage(session);
+    }
+});
 
 var server = restify.createServer();
 server.use(restify.plugins.jsonBodyParser());
-
 server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
+server.post('/api/messages', botService.listen());
 
-server.post('/api/messages', skypeBot.botService.listen());
+function initGleBot()
+{
+    const botConfig = new GleConfig(
+        process.env.APIAI_ACCESS_TOKEN,
+        process.env.APIAI_LANG
+    );
+    
+    const gleBot = new GoogleBot(botConfig);
+}

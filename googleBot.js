@@ -18,9 +18,8 @@
 
 const apiai = require('apiai');
 const uuid = require('node-uuid');
-const botbuilder = require('botbuilder');
 
-module.exports = class SkypeBot {
+module.exports = class GoogleBot {
 
     get apiaiService() {
         return this._apiaiService;
@@ -36,14 +35,6 @@ module.exports = class SkypeBot {
 
     set botConfig(value) {
         this._botConfig = value;
-    }
-
-    get botService() {
-        return this._botService;
-    }
-
-    set botService(value) {
-        this._botService = value;
     }
 
     get sessionIds() {
@@ -63,19 +54,6 @@ module.exports = class SkypeBot {
 
         this._apiaiService = apiai(botConfig.apiaiAccessToken, apiaiOptions);
         this._sessionIds = new Map();
-
-        this.botService = new botbuilder.ChatConnector({
-            appId: this.botConfig.skypeAppId,
-            appPassword: this.botConfig.skypeAppSecret
-        });
-
-        this._bot = new botbuilder.UniversalBot(this.botService);
-
-        this._bot.dialog('/', (session) => {
-            if (session.message && session.message.text) {
-                this.processMessage(session);
-            }
-        });
 
     }
 
@@ -106,13 +84,13 @@ module.exports = class SkypeBot {
                     console.log(sender, "Received api.ai response");
                 }
 
-                if (SkypeBot.isDefined(response.result) && SkypeBot.isDefined(response.result.fulfillment)) {
+                if (GoogleBot.isDefined(response.result) && GoogleBot.isDefined(response.result.fulfillment)) {
                     let responseText = response.result.fulfillment.speech;
                     let responseMessages = response.result.fulfillment.messages;
 
-                    if (SkypeBot.isDefined(responseMessages) && responseMessages.length > 0) {
+                    if (GoogleBot.isDefined(responseMessages) && responseMessages.length > 0) {
                         this.doRichContentResponse(session, responseMessages);
-                    } else if (SkypeBot.isDefined(responseText)) {
+                    } else if (GoogleBot.isDefined(responseText)) {
                         console.log(sender, 'Response as text message');
                         session.send(responseText);
 
@@ -144,7 +122,7 @@ module.exports = class SkypeBot {
                 case 0:
                     {
 
-                        if (SkypeBot.isDefined(message.speech)) {
+                        if (GoogleBot.isDefined(message.speech)) {
                             session.send(message.speech);
                         }
 
@@ -157,15 +135,15 @@ module.exports = class SkypeBot {
                     {
                         let heroCard = new botbuilder.HeroCard(session).title(message.title);
 
-                        if (SkypeBot.isDefined(message.subtitle)) {
+                        if (GoogleBot.isDefined(message.subtitle)) {
                             heroCard = heroCard.subtitle(message.subtitle)
                         }
 
-                        if (SkypeBot.isDefined(message.imageUrl)) {
+                        if (GoogleBot.isDefined(message.imageUrl)) {
                             heroCard = heroCard.images([botbuilder.CardImage.create(session, message.imageUrl)]);
                         }
 
-                        if (SkypeBot.isDefined(message.buttons)) {
+                        if (GoogleBot.isDefined(message.buttons)) {
 
                             let buttons = [];
 
@@ -208,7 +186,7 @@ module.exports = class SkypeBot {
 
                         let heroCard = new botbuilder.HeroCard(session).title(message.title);
 
-                        if (SkypeBot.isDefined(message.replies)) {
+                        if (GoogleBot.isDefined(message.replies)) {
 
                             for (let replyIndex = 0; replyIndex < message.replies.length; replyIndex++) {
                                 let messageReply = message.replies[replyIndex];
