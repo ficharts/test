@@ -1,3 +1,10 @@
+wget http://kent.dl.sourceforge.net/sourceforge/sox/sox-13.0.0.tar.gz
+tar xzvf sox-13.0.0.tar.gz
+cd sox-13.0.0
+./configure
+make
+sudo make install
+
 /**
  * Copyright 2017 Google Inc. All Rights Reserved.
  *
